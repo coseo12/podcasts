@@ -48,6 +48,7 @@ export const Dashboard = () => {
     e.preventDefault();
     history.push(`/edit-podcast/${id}`);
   };
+
   const deletePodcast = (
     id: number,
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -70,7 +71,7 @@ export const Dashboard = () => {
         Create Podcast
       </a>
       <div className="bg-lime-200 pt-1 my-5"></div>
-      <div className="w-full grid grid-cols-5 gap-2 m-2">
+      <div className="w-full grid grid-cols-4 gap-5 mt-10 px-5 py-5">
         {data?.me.podcasts.map(podcast => (
           <Link
             key={podcast.id}

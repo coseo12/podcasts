@@ -43,6 +43,15 @@ export interface PodcastSearchInput {
   id: number;
 }
 
+export interface SearchPodcastsInput {
+  page?: number | null;
+  titleQuery: string;
+}
+
+export interface ToggleSubscribeInput {
+  podcastId: number;
+}
+
 export interface UpdateEpisodeInput {
   podcastId: number;
   episodeId: number;

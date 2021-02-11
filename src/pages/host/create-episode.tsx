@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button } from '../../components/button';
 import { FormError } from '../../components/form-error';
-import { ME_QUERY } from '../../hooks/useMe';
 import {
   createEpisodeMutation,
   createEpisodeMutationVariables,

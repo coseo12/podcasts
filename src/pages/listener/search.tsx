@@ -1,16 +1,17 @@
 import { gql, useMutation, useQuery } from '@apollo/client';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMe } from '../../hooks/useMe';
-import { getAllPodcasts } from '../../__generated__/getAllPodcasts';
+import { searchPodcasts } from '../../__generated__/searchPodcasts';
 import {
   toggleSubscribe,
   toggleSubscribeVariables,
 } from '../../__generated__/toggleSubscribe';
+import { TOGGLE_SUBSCRIBE_MUTATION } from './podcasts';
 
-export const PODCASTS_QUERY = gql`
-  query getAllPodcasts {
-    getAllPodcasts {
+export const SEARCH_QUERY = gql`
+  query searchPodcasts($searchPodcastsInput: SearchPodcastsInput!) {
+    searchPodcasts(input: $searchPodcastsInput) {
       ok
       error
       podcasts {
@@ -25,7 +26,7 @@ export const PODCASTS_QUERY = gql`
   }
 `;
 
-type TPodcast = {
+type TSearch = {
   id: number;
   createdAt: Date;
   updatedAt: Date;
@@ -34,17 +35,20 @@ type TPodcast = {
   rating: number;
 };
 
-export const TOGGLE_SUBSCRIBE_MUTATION = gql`
-  mutation toggleSubscribe($toggleSubscribeInput: ToggleSubscribeInput!) {
-    toggleSubscribe(input: $toggleSubscribeInput) {
-      ok
-      error
-    }
-  }
-`;
+interface ISearchParams {
+  term: string;
+}
 
-export const Podcasts = () => {
-  const { data, loading } = useQuery<getAllPodcasts>(PODCASTS_QUERY);
+export const Search = () => {
+  const params = useParams<ISearchParams>();
+  const { data, loading } = useQuery<searchPodcasts>(SEARCH_QUERY, {
+    variables: {
+      searchPodcastsInput: {
+        page: 1,
+        titleQuery: params.term,
+      },
+    },
+  });
   const { data: meData } = useMe();
 
   const onCompleted = (data: toggleSubscribe) => {
@@ -62,7 +66,7 @@ export const Podcasts = () => {
     toggleSubscribeVariables
   >(TOGGLE_SUBSCRIBE_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: PODCASTS_QUERY }],
+    refetchQueries: [{ query: SEARCH_QUERY }],
   });
 
   const onSubscribe = (
@@ -82,7 +86,7 @@ export const Podcasts = () => {
   return (
     <div className="grid gap-5 grid-cols-4 mt-10 px-5 py-5">
       {loading && <div>Loading...</div>}
-      {data?.getAllPodcasts?.podcasts?.map((podcast: TPodcast) => (
+      {data?.searchPodcasts?.podcasts?.map((podcast: TSearch) => (
         <Link to={`/podcast/${podcast.id}`} key={podcast.id}>
           <div className="bg-lime-200 py-10 flex flex-col justify-center items-center rounded-lg">
             <div className="mb-5">

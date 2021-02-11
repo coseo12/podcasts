@@ -28,7 +28,7 @@ export const PodcastHost = () => {
   const deleteEpisode = (id: number) => {};
 
   return (
-    <div className="flex items-center justify-center mt-20">
+    <div className="flex items-center justify-center">
       {loading && <div>Loading...</div>}
       {data?.getPodcast && (
         <div className="w-full h-full grid gap-5 bg-lime-100 rounded-md px-10 py-10 shadow md:shadow-lg">

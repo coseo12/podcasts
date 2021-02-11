@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { Button } from '../components/button';
 import { FormError } from '../components/form-error';
+import { useMe } from '../hooks/useMe';
 import {
   editProfileMutation,
   editProfileMutationVariables,
@@ -24,6 +25,8 @@ interface IEditProfileForm {
 }
 
 export const EditProfile = () => {
+  const { data } = useMe();
+
   const {
     register,
     getValues,
@@ -32,6 +35,9 @@ export const EditProfile = () => {
     formState,
   } = useForm<IEditProfileForm>({
     mode: 'onChange',
+    defaultValues: {
+      email: data?.me.email,
+    },
   });
   const history = useHistory();
   const onCompleted = (data: editProfileMutation) => {
@@ -90,16 +96,12 @@ export const EditProfile = () => {
             <FormError errorMessage={`Please enter a valid email`} />
           )}
           <input
-            ref={register({ required: 'Password is required' })}
+            ref={register}
             name="password"
             type="password"
-            required
             placeholder="Password"
             className="input"
           />
-          {errors.password?.message && (
-            <FormError errorMessage={errors.password?.message} />
-          )}
           <Button
             canClick={formState.isValid}
             loading={loading}

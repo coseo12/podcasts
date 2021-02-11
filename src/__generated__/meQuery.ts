@@ -19,12 +19,23 @@ export interface meQuery_me_podcasts {
   updatedAt: any;
 }
 
+export interface meQuery_me_subsriptions {
+  __typename: "Podcast";
+  id: number;
+  title: string;
+  category: string;
+  rating: number;
+  createdAt: any;
+  updatedAt: any;
+}
+
 export interface meQuery_me {
   __typename: "User";
   id: number;
   email: string;
   role: UserRole;
   podcasts: meQuery_me_podcasts[];
+  subsriptions: meQuery_me_subsriptions[];
 }
 
 export interface meQuery {

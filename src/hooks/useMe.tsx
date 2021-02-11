@@ -15,6 +15,14 @@ export const ME_QUERY = gql`
         createdAt
         updatedAt
       }
+      subsriptions {
+        id
+        title
+        category
+        rating
+        createdAt
+        updatedAt
+      }
     }
   }
 `;

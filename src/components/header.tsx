@@ -1,12 +1,28 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { isLoggedInVar, authTokenVar } from '../apollo';
 
 export const Header = () => {
+  const history = useHistory();
+  const [term, setTerm] = useState('');
+
   const logout = () => {
     localStorage.removeItem('token');
     isLoggedInVar(false);
     authTokenVar(null);
+    history.push('/');
+    window.location.reload();
+  };
+
+  const onChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTerm(e.target.value);
+  };
+
+  const onKeyup = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      if (term.length > 0) history.push(`/search/${term}`);
+      else history.push(`/`);
+    }
   };
 
   return (
@@ -31,6 +47,14 @@ export const Header = () => {
             ></path>
           </svg>
         </Link>
+      </div>
+      <div>
+        <input
+          type="text"
+          className="input p-2"
+          onKeyUp={onKeyup}
+          onChange={onChage}
+        />
       </div>
       <div className="flex text-xs">
         <a href="/edit-profile" className="mr-2 smBtn">

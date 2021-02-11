@@ -12,12 +12,14 @@ import { EditPodcast } from '../pages/host/edit-podcast';
 import { PodcastHost } from '../pages/host/podcast';
 import { CreateEpisode } from '../pages/host/create-episode';
 import { EditEpisode } from '../pages/host/edit-episode';
+import { Search } from '../pages/listener/search';
 
 const commonRoutes = [{ path: '/edit-profile', component: <EditProfile /> }];
 
 const listenerRouter = [
   { path: '/', component: <Podcasts /> },
   { path: '/podcast/:id', component: <Podcast /> },
+  { path: '/search/:term', component: <Search /> },
 ];
 
 const hostRouter = [
