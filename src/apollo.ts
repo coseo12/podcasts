@@ -29,10 +29,7 @@ export const authTokenVar = makeVar(token);
 // });
 
 const httpLink = createHttpLink({
-  uri:
-    process.env.NODE_ENV === 'production'
-      ? 'https://s-nuber-challenges.herokuapp.com/graphql'
-      : 'http://localhost:4000/graphql',
+  uri: 'https://s-nuber-challenges.herokuapp.com/graphql',
 });
 
 const authLink = setContext((_, { headers }) => {

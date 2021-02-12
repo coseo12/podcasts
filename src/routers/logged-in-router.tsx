@@ -13,6 +13,8 @@ import { PodcastHost } from '../pages/host/podcast';
 import { CreateEpisode } from '../pages/host/create-episode';
 import { EditEpisode } from '../pages/host/edit-episode';
 import { Search } from '../pages/listener/search';
+import { CreateReview } from '../pages/listener/create-review';
+import { SeeSubscribe } from '../pages/listener/see-subscribe';
 
 const commonRoutes = [{ path: '/edit-profile', component: <EditProfile /> }];
 
@@ -20,6 +22,8 @@ const listenerRouter = [
   { path: '/', component: <Podcasts /> },
   { path: '/podcast/:id', component: <Podcast /> },
   { path: '/search/:term', component: <Search /> },
+  { path: '/create-review/:podcastId', component: <CreateReview /> },
+  { path: '/see-subscribe', component: <SeeSubscribe /> },
 ];
 
 const hostRouter = [

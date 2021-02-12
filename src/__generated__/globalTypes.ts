@@ -29,6 +29,12 @@ export interface CreatePodcastInput {
   category: string;
 }
 
+export interface CreateReviewInput {
+  title: string;
+  text: string;
+  podcastId: number;
+}
+
 export interface EditProfileInput {
   email?: string | null;
   password?: string | null;

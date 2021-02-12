@@ -23,7 +23,7 @@ Uber eats last challenge
 - [x] See Podcast Categories
 - [x] Search Podcasts
 - [x] See Podcast + Episodes
-- [ ] Review Podcast
+- [x] Review Podcast
 - [x] Subscribe to a Podcast
-- [ ] See Subscriptions
-- [ ] See Feed (Episodes of Podcasts the user is subscribed to combined)
+- [x] See Subscriptions
+- [x] See Feed (Episodes of Podcasts the user is subscribed to combined)

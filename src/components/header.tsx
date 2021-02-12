@@ -57,6 +57,9 @@ export const Header = () => {
         />
       </div>
       <div className="flex text-xs">
+        <a href="/see-subscribe" className="mr-2 smBtn">
+          See Subscribe
+        </a>
         <a href="/edit-profile" className="mr-2 smBtn">
           Edit Profile
         </a>

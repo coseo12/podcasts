@@ -1,6 +1,6 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { getPodcast } from '../../__generated__/getPodcast';
 
 export const PODCAST_QUERY = gql`
@@ -40,11 +40,16 @@ interface IPodcastParams {
 
 export const Podcast = () => {
   const params = useParams<IPodcastParams>();
+  const history = useHistory();
   const { data, loading } = useQuery<getPodcast>(PODCAST_QUERY, {
     variables: {
       id: +params.id,
     },
   });
+
+  const toCreateReview = () => {
+    history.push(`/create-review/${params.id}`);
+  };
 
   return (
     <div className="flex items-center justify-center">
@@ -101,7 +106,12 @@ export const Podcast = () => {
             </div>
           ))}
           <div className="pt-1 bg-lime-400"></div>
-          <span>Reviews 📬</span>
+          <div className="felx justify-center items-center">
+            <span className="mr-5">Reviews 📬</span>
+            <button className="smBtn" onClick={toCreateReview}>
+              Write
+            </button>
+          </div>
           {data?.getPodcast?.podcast?.reviews.map((review: any) => (
             <div
               key={review.id}

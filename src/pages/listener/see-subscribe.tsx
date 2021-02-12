@@ -1,38 +1,11 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useMutation } from '@apollo/client';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useMe } from '../../hooks/useMe';
-import { getAllPodcasts } from '../../__generated__/getAllPodcasts';
+import { ME_QUERY, useMe } from '../../hooks/useMe';
 import {
   toggleSubscribe,
   toggleSubscribeVariables,
 } from '../../__generated__/toggleSubscribe';
-
-export const PODCASTS_QUERY = gql`
-  query getAllPodcasts {
-    getAllPodcasts {
-      ok
-      error
-      podcasts {
-        id
-        createdAt
-        updatedAt
-        title
-        category
-        rating
-      }
-    }
-  }
-`;
-
-type TPodcast = {
-  id: number;
-  createdAt: Date;
-  updatedAt: Date;
-  title: string;
-  category: string;
-  rating: number;
-};
 
 export const TOGGLE_SUBSCRIBE_MUTATION = gql`
   mutation toggleSubscribe($toggleSubscribeInput: ToggleSubscribeInput!) {
@@ -43,15 +16,15 @@ export const TOGGLE_SUBSCRIBE_MUTATION = gql`
   }
 `;
 
-export const Podcasts = () => {
-  const { data, loading } = useQuery<getAllPodcasts>(PODCASTS_QUERY);
-  const { data: meData } = useMe();
+export const SeeSubscribe = () => {
+  const { data: meData, loading } = useMe();
 
   const onCompleted = (data: toggleSubscribe) => {
     const {
       toggleSubscribe: { ok },
     } = data;
     if (ok) {
+      // alert('Subscribe!');
       window.location.reload();
     }
   };
@@ -61,7 +34,7 @@ export const Podcasts = () => {
     toggleSubscribeVariables
   >(TOGGLE_SUBSCRIBE_MUTATION, {
     onCompleted,
-    refetchQueries: [{ query: PODCASTS_QUERY }],
+    refetchQueries: [{ query: ME_QUERY }],
   });
 
   const onSubscribe = (
@@ -80,11 +53,11 @@ export const Podcasts = () => {
 
   return (
     <>
-      <div className="my-5 ml-5 text-lime-900 text-xl font-bold">Podcasts</div>
+      <div className="my-5 ml-5 text-lime-900 text-xl font-bold">Subscribe</div>
       <div className="pt-1 bg-lime-400"></div>
       <div className="grid gap-5 grid-cols-4 px-5 py-5">
         {loading && <div>Loading...</div>}
-        {data?.getAllPodcasts?.podcasts?.map((podcast: TPodcast) => (
+        {meData?.me?.subsriptions?.map(podcast => (
           <Link to={`/podcast/${podcast.id}`} key={podcast.id}>
             <div className="bg-lime-200 py-10 flex flex-col justify-center items-center rounded-lg">
               <div className="mb-5">
